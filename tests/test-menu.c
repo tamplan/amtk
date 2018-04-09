@@ -1,14 +1,14 @@
 /*
- * This file is part of Tepl, a text editor library.
+ * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
- * Tepl is free software; you can redistribute it and/or modify it under
+ * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
  * Free Software Foundation; either version 2.1 of the License, or (at your
  * option) any later version.
  *
- * Tepl is distributed in the hope that it will be useful, but WITHOUT ANY
+ * Amtk is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
  * License for more details.
@@ -17,13 +17,17 @@
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <tepl/tepl.h>
+#include <amtk/amtk.h>
+
+/* This should be stored instead in the Private struct of the app GtkApplication
+ * subclass. But here to not make the code too complicated there is no
+ * GtkApplication subclass.
+ */
+static AmtkActionInfoStore *action_info_store = NULL;
 
 static void
-add_action_info_entries (TeplApplication *tepl_app)
+add_action_info_entries (void)
 {
-	AmtkActionInfoStore *store;
-
 	const AmtkActionInfoEntry entries[] =
 	{
 		/* action, icon, label, accel, tooltip */
@@ -38,9 +42,10 @@ add_action_info_entries (TeplApplication *tepl_app)
 		  "Show or hide the side panel" },
 	};
 
-	store = tepl_application_get_app_action_info_store (tepl_app);
+	g_assert (action_info_store == NULL);
+	action_info_store = amtk_action_info_store_new ();
 
-	amtk_action_info_store_add_entries (store,
+	amtk_action_info_store_add_entries (action_info_store,
 					    entries,
 					    G_N_ELEMENTS (entries),
 					    NULL);
@@ -81,11 +86,7 @@ static void
 startup_cb (GApplication *g_app,
 	    gpointer      user_data)
 {
-	TeplApplication *tepl_app;
-
-	tepl_app = tepl_application_get_from_gtk_application (GTK_APPLICATION (g_app));
-
-	add_action_info_entries (tepl_app);
+	add_action_info_entries ();
 	add_app_action_entries (g_app);
 }
 
@@ -141,8 +142,6 @@ create_menu_bar (void)
 	GtkWidget *view_menu_item;
 	GtkWidget *help_menu_item;
 	GtkMenuBar *menu_bar;
-	TeplApplication *app;
-	AmtkActionInfoStore *store;
 
 	file_menu_item = gtk_menu_item_new_with_mnemonic ("_File");
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (file_menu_item),
@@ -161,9 +160,7 @@ create_menu_bar (void)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), view_menu_item);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), help_menu_item);
 
-	app = tepl_application_get_default ();
-	store = tepl_application_get_app_action_info_store (app);
-	amtk_action_info_store_check_all_used (store);
+	amtk_action_info_store_check_all_used (action_info_store);
 
 	return menu_bar;
 }
@@ -215,7 +212,7 @@ main (int    argc,
 	GtkApplication *app;
 	int status;
 
-	app = gtk_application_new ("org.gnome.tepl.test-menu", G_APPLICATION_FLAGS_NONE);
+	app = gtk_application_new ("org.gnome.amtk.test-menu", G_APPLICATION_FLAGS_NONE);
 
 	g_signal_connect (app,
 			  "startup",
@@ -228,6 +225,8 @@ main (int    argc,
 			  NULL);
 
 	status = g_application_run (G_APPLICATION (app), argc, argv);
+
 	g_object_unref (app);
+	g_clear_object (&action_info_store);
 	return status;
 }

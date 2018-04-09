@@ -11,8 +11,7 @@ LDADD = $(top_builddir)/amtk/libamtk-core.la	\
 noinst_PROGRAMS = $(TEST_PROGS)
 TEST_PROGS =
 
-# TODO use Amtk only.
-#TEST_PROGS += test-menu
-#test_menu_SOURCES = test-menu.c
+TEST_PROGS += test-menu
+test_menu_SOURCES = test-menu.c
 
 -include $(top_srcdir)/git.mk
