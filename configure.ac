@@ -3,7 +3,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.64)
 
 # Package version of the form 'major.minor.micro'.
-m4_define(amtk_package_version, 4.0.1)
+m4_define(amtk_package_version, 4.99.0)
 
 AC_INIT([Amtk],
 	[amtk_package_version],
@@ -42,10 +42,10 @@ AC_SUBST([AMTK_LT_VERSION])
 # API version, used for parallel installability.
 # Not used in:
 # - po/Makevars
-# - the docs/reference/amtk-4.0-sections.txt filename
+# - the docs/reference/amtk-5.0-sections.txt filename
 # Because as far as I've tested, it is not easily feasible to not hardcode the
 # API version in those places (swilmet).
-AMTK_API_VERSION=4
+AMTK_API_VERSION=5
 AC_SUBST([AMTK_API_VERSION])
 
 # Dependencies
