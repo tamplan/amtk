@@ -1,30 +1,23 @@
-Tepl - Text editor product line
-===============================
+Amtk - Actions, Menus and Toolbars Kit for GTK+ applications
+============================================================
 
-This is version 4.0.1 of Tepl.
+This is version 4.0.1 of Amtk.
 
-Tepl is a library that eases the development of GtkSourceView-based text
-editors and IDEs.
+Amtk is the acronym for “Actions, Menus and Toolbars Kit”. It is a basic
+GtkUIManager replacement based on GAction.
 
-Tepl was previously named Gtef (GTK+ text editor framework). The project has
-been renamed in June 2017 to have a more beautiful name. The end of Tepl is
-pronounced like in “apple”.
-
-The Tepl library is free software and is released under the terms of the GNU
+The Amtk library is free software and is released under the terms of the GNU
 Lesser General Public License, see the 'COPYING' file for more information.
 
-The Tepl web page:
+The Amtk web page:
 
-    https://wiki.gnome.org/Projects/Tepl
+    https://wiki.gnome.org/Projects/Amtk
 
 Dependencies
 ------------
 
 - GLib >= 2.52
 - GTK+ >= 3.22
-- GtkSourceView >= 4.0
-- libxml2 >= 2.5
-- uchardet - https://www.freedesktop.org/wiki/Software/uchardet/
 
 Installation
 ------------
@@ -42,7 +35,7 @@ From the Git repository, the 'configure' script and the 'INSTALL' file are not
 yet generated, so you need to run 'autogen.sh' instead, which takes the same
 arguments as 'configure'.
 
-To build the latest version of Tepl plus its dependencies from Git, Jhbuild is
+To build the latest version of Amtk plus its dependencies from Git, Jhbuild is
 recommended:
 
     https://wiki.gnome.org/Projects/Jhbuild

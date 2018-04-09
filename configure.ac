@@ -9,7 +9,7 @@ AC_INIT([Amtk],
 	[amtk_package_version],
 	[https://gitlab.gnome.org/GNOME/tepl/issues],
 	[amtk],
-	[https://wiki.gnome.org/Projects/Tepl])
+	[https://wiki.gnome.org/Projects/Amtk])
 
 AX_REQUIRE_DEFINED([AX_IS_RELEASE])
 AX_IS_RELEASE([git-directory])

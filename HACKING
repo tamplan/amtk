@@ -1,11 +1,11 @@
-How to contribute to Tepl
+How to contribute to Amtk
 =========================
 
-Tepl follows the same guidelines and code conventions as GtkSourceView:
+Amtk follows the same guidelines and code conventions as GtkSourceView:
 
     https://git.gnome.org/browse/gtksourceview/tree/HACKING
 
-Tepl is hosted on the GNOME GitLab instance, you can fork the repository
+Amtk is hosted on the GNOME GitLab instance, you can fork the repository
 and then do a merge request:
 
     https://gitlab.gnome.org/GNOME/tepl
