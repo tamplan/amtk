@@ -212,6 +212,8 @@ main (int    argc,
 	GtkApplication *app;
 	int status;
 
+	amtk_init ();
+
 	app = gtk_application_new ("org.gnome.amtk.test-menu", G_APPLICATION_FLAGS_NONE);
 
 	g_signal_connect (app,
@@ -226,6 +228,7 @@ main (int    argc,
 
 	status = g_application_run (G_APPLICATION (app), argc, argv);
 
+	amtk_finalize ();
 	g_object_unref (app);
 	g_clear_object (&action_info_store);
 	return status;
