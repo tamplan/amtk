@@ -34,9 +34,9 @@ MKDB_OPTIONS = --xml-mode --output-format=xml
 HTML_IMAGES =
 
 # Extra XML files that are included by $(DOC_MAIN_SGML_FILE)
-content_files =			\
-	amtk-intro.xml		\
-	api-breaks.xml
+content_files =		\
+	amtk-intro.xml	\
+	$(NULL)
 
 # Extra options to supply to gtkdoc-fixref
 FIXXREF_OPTIONS =

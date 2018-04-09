@@ -28,8 +28,6 @@
     <xi:include href="xml/amtk-utils.xml"/>
   </part>
 
-  <xi:include href="api-breaks.xml"/>
-
   <part id="annexes">
     <title>Annexes</title>
 
