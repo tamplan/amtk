@@ -15,7 +15,7 @@
 <refnamediv>
   <refname>Amtk Introduction</refname>
   <refpurpose>
-    Introduction to the Actions, Menus and Toolbars Kit for GTK+
+    Introduction to the Actions, Menus and Toolbars Kit for GTK+ applications.
   </refpurpose>
 </refnamediv>
 
@@ -30,11 +30,6 @@
   <link linkend="GtkStatusbar">GtkStatusbar</link>; in contrast to the new UI
   with a <link linkend="GtkHeaderBar">GtkHeaderBar</link> and a “hamburger
   menu”).
-</para>
-
-<para>
-  Amtk is developed inside the Tepl repository, but is a separate shared library
-  so that applications can use it without depending on Tepl, GtkSourceView, etc.
 </para>
 
 <para>

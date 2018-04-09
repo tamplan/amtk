@@ -14,7 +14,7 @@
 
   <xi:include href="amtk-intro.xml"/>
 
-  <chapter id="api-reference">
+  <part id="api-reference">
     <title>Amtk API Reference</title>
     <xi:include href="xml/amtk-init.xml"/>
     <xi:include href="xml/amtk-application-window.xml"/>
@@ -26,7 +26,7 @@
     <xi:include href="xml/amtk-menu-item.xml"/>
     <xi:include href="xml/amtk-menu-shell.xml"/>
     <xi:include href="xml/amtk-utils.xml"/>
-  </chapter>
+  </part>
 
   <xi:include href="api-breaks.xml"/>
 
@@ -43,10 +43,6 @@
     <index id="api-index-full">
       <title>Index of all symbols</title>
       <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
-    </index>
-    <index id="api-index-1-0" role="1.0">
-      <title>Index of new symbols in 1.0</title>
-      <xi:include href="xml/api-index-1.0.xml"><xi:fallback /></xi:include>
     </index>
     <index id="api-index-2-0" role="2.0">
       <title>Index of new symbols in 2.0</title>
