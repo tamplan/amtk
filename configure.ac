@@ -82,14 +82,10 @@ AX_REQUIRE_DEFINED([AX_COMPILER_FLAGS])
 AX_COMPILER_FLAGS([WARN_CFLAGS], [WARN_LDFLAGS], [yes])
 
 # Dynamic linking dependencies
-# TODO simplify.
 AX_REQUIRE_DEFINED([AX_PKG_CHECK_MODULES])
 AX_PKG_CHECK_MODULES([AMTK_DEP],
 		     [glib-2.0 >= $glib_req  gtk+-3.0 >= $gtk_req],
-		     [],
-		     [], [],
-		     [AMTK_PACKAGE_REQUIRES],
-		     [AMTK_PACKAGE_REQUIRES_PRIVATE])
+		     [])
 
 # i18n
 AM_GNU_GETTEXT([external])
