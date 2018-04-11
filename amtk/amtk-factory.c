@@ -1,7 +1,7 @@
 /*
  * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
  * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -668,6 +668,85 @@ amtk_factory_create_check_menu_item_full (AmtkFactory      *factory,
 	}
 
 	return GTK_WIDGET (check_menu_item);
+}
+
+/**
+ * amtk_factory_create_simple_menu:
+ * @factory: an #AmtkFactory.
+ * @entries: (array length=n_entries) (element-type AmtkActionInfoEntry): a
+ *   pointer to the first item in an array of #AmtkActionInfoEntry structs.
+ * @n_entries: the length of @entries, or -1 if @entries is %NULL-terminated.
+ *
+ * Calls amtk_factory_create_simple_menu_full() with the
+ * #AmtkFactory:default-flags.
+ *
+ * Returns: (transfer floating): a new simple #GtkMenu for @entries.
+ * Since: 5.0
+ */
+GtkWidget *
+amtk_factory_create_simple_menu (AmtkFactory               *factory,
+				 const AmtkActionInfoEntry *entries,
+				 gint                       n_entries)
+{
+	g_return_val_if_fail (AMTK_IS_FACTORY (factory), NULL);
+	g_return_val_if_fail (n_entries >= -1, NULL);
+	g_return_val_if_fail (entries != NULL || n_entries == 0, NULL);
+
+	return amtk_factory_create_simple_menu_full (factory,
+						     entries,
+						     n_entries,
+						     factory->priv->default_flags);
+}
+
+/**
+ * amtk_factory_create_simple_menu_full:
+ * @factory: an #AmtkFactory.
+ * @entries: (array length=n_entries) (element-type AmtkActionInfoEntry): a
+ *   pointer to the first item in an array of #AmtkActionInfoEntry structs.
+ * @n_entries: the length of @entries, or -1 if @entries is %NULL-terminated.
+ * @flags: #AmtkFactoryFlags.
+ *
+ * This function ignores the #AmtkFactory:default-flags property and takes the
+ * @flags argument instead.
+ *
+ * This function:
+ * - Creates a #GtkMenu;
+ * - For each #AmtkActionInfoEntry action name from @entries, creates a
+ *   #GtkMenuItem with amtk_factory_create_menu_item_full() with the same @flags
+ *   as passed in to this function, and appends it to the #GtkMenu, in the same
+ *   order as provided by the @entries array.
+ *
+ * So this function is useful only if the #GtkMenu contains only simple
+ * #GtkMenuItem's, not #GtkCheckMenuItem's nor #GtkRadioMenuItem's.
+ *
+ * Returns: (transfer floating): a new simple #GtkMenu for @entries.
+ * Since: 5.0
+ */
+GtkWidget *
+amtk_factory_create_simple_menu_full (AmtkFactory               *factory,
+				      const AmtkActionInfoEntry *entries,
+				      gint                       n_entries,
+				      AmtkFactoryFlags           flags)
+{
+	GtkMenuShell *menu;
+	gint i;
+
+	g_return_val_if_fail (AMTK_IS_FACTORY (factory), NULL);
+	g_return_val_if_fail (n_entries >= -1, NULL);
+	g_return_val_if_fail (entries != NULL || n_entries == 0, NULL);
+
+	menu = GTK_MENU_SHELL (gtk_menu_new ());
+
+	for (i = 0; n_entries == -1 ? entries[i].action_name != NULL : i < n_entries; i++)
+	{
+		const AmtkActionInfoEntry *cur_entry = &entries[i];
+		GtkWidget *menu_item;
+
+		menu_item = amtk_factory_create_menu_item_full (factory, cur_entry->action_name, flags);
+		gtk_menu_shell_append (menu, menu_item);
+	}
+
+	return GTK_WIDGET (menu);
 }
 
 /**

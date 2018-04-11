@@ -1,7 +1,7 @@
 /*
  * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
  * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -110,6 +110,15 @@ GtkWidget *		amtk_factory_create_check_menu_item		(AmtkFactory *factory,
 GtkWidget *		amtk_factory_create_check_menu_item_full	(AmtkFactory      *factory,
 									 const gchar      *action_name,
 									 AmtkFactoryFlags  flags);
+
+GtkWidget *		amtk_factory_create_simple_menu			(AmtkFactory               *factory,
+									 const AmtkActionInfoEntry *entries,
+									 gint                       n_entries);
+
+GtkWidget *		amtk_factory_create_simple_menu_full		(AmtkFactory               *factory,
+									 const AmtkActionInfoEntry *entries,
+									 gint                       n_entries,
+									 AmtkFactoryFlags           flags);
 
 GtkToolItem *		amtk_factory_create_tool_button			(AmtkFactory *factory,
 									 const gchar *action_name);

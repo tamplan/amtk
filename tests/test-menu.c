@@ -25,15 +25,23 @@
  */
 static AmtkActionInfoStore *action_info_store = NULL;
 
+static AmtkActionInfoEntry file_action_info_entries[] =
+{
+	{ "win.open", "document-open", "_Open", "<Control>o",
+	  "Open a file" },
+
+	{ "app.quit", "application-exit", "_Quit", "<Control>q",
+	  "Quit the application" },
+
+	{ NULL }
+};
+
 static void
 add_action_info_entries (void)
 {
 	const AmtkActionInfoEntry entries[] =
 	{
 		/* action, icon, label, accel, tooltip */
-
-		{ "app.quit", "application-exit", "_Quit", "<Control>q",
-		  "Quit the application" },
 
 		{ "app.about", "help-about", "_About", NULL,
 		  "About this application" },
@@ -48,6 +56,10 @@ add_action_info_entries (void)
 	amtk_action_info_store_add_entries (action_info_store,
 					    entries,
 					    G_N_ELEMENTS (entries),
+					    NULL);
+
+	amtk_action_info_store_add_entries (action_info_store,
+					    file_action_info_entries, -1,
 					    NULL);
 }
 
@@ -91,21 +103,6 @@ startup_cb (GApplication *g_app,
 }
 
 static GtkWidget *
-create_file_submenu (void)
-{
-	GtkMenuShell *file_submenu;
-	AmtkFactory *factory;
-
-	file_submenu = GTK_MENU_SHELL (gtk_menu_new ());
-
-	factory = amtk_factory_new_with_default_application ();
-	gtk_menu_shell_append (file_submenu, amtk_factory_create_menu_item (factory, "app.quit"));
-	g_object_unref (factory);
-
-	return GTK_WIDGET (file_submenu);
-}
-
-static GtkWidget *
 create_view_submenu (void)
 {
 	GtkMenuShell *view_submenu;
@@ -138,14 +135,17 @@ create_help_submenu (void)
 static GtkMenuBar *
 create_menu_bar (void)
 {
+	AmtkFactory *factory;
 	GtkWidget *file_menu_item;
 	GtkWidget *view_menu_item;
 	GtkWidget *help_menu_item;
 	GtkMenuBar *menu_bar;
 
+	factory = amtk_factory_new_with_default_application ();
+
 	file_menu_item = gtk_menu_item_new_with_mnemonic ("_File");
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (file_menu_item),
-				   create_file_submenu ());
+				   amtk_factory_create_simple_menu (factory, file_action_info_entries, -1));
 
 	view_menu_item = gtk_menu_item_new_with_mnemonic ("_View");
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (view_menu_item),
@@ -162,6 +162,7 @@ create_menu_bar (void)
 
 	amtk_action_info_store_check_all_used (action_info_store);
 
+	g_object_unref (factory);
 	return menu_bar;
 }
 
