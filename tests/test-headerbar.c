@@ -83,22 +83,25 @@ add_win_actions (GtkApplicationWindow *window,
 static GMenuModel *
 create_window_menu (void)
 {
+	AmtkFactory *factory;
 	GMenu *menu;
 	GMenuItem *item;
 
 	menu = g_menu_new ();
+	factory = amtk_factory_new_with_default_application ();
 
-	/* TODO create and use Amtk factory function, plus a utility function to
-	 * append+unref a GMenuItem to a GMenu.
+	/* TODO create a utility function to append+unref a GMenuItem to a
+	 * GMenu.
 	 */
-	item = g_menu_item_new ("_Side Panel", "win.show-side-panel");
+	item = amtk_factory_create_gmenu_item (factory, "win.show-side-panel");
 	g_menu_append_item (menu, item);
 	g_object_unref (item);
 
-	item = g_menu_item_new ("_Print", "win.print");
+	item = amtk_factory_create_gmenu_item (factory, "win.print");
 	g_menu_append_item (menu, item);
 	g_object_unref (item);
 
+	g_object_unref (factory);
 	g_menu_freeze (menu);
 
 	return G_MENU_MODEL (menu);

@@ -56,7 +56,9 @@ struct _AmtkFactoryClass
 /**
  * AmtkFactoryFlags:
  * @AMTK_FACTORY_FLAGS_NONE: No flags.
- * @AMTK_FACTORY_IGNORE_GACTION: Do not call gtk_actionable_set_action_name().
+ * @AMTK_FACTORY_IGNORE_GACTION: Do not associate the created object with the
+ *   #GAction. For example if the object to create is a #GtkActionable, do not
+ *   call gtk_actionable_set_action_name().
  * @AMTK_FACTORY_IGNORE_ICON: Do not set an icon.
  * @AMTK_FACTORY_IGNORE_LABEL: Do not set a label/short description.
  * @AMTK_FACTORY_IGNORE_TOOLTIP: Do not set a tooltip/long description.
@@ -119,6 +121,13 @@ GtkWidget *		amtk_factory_create_simple_menu_full		(AmtkFactory               *f
 									 const AmtkActionInfoEntry *entries,
 									 gint                       n_entries,
 									 AmtkFactoryFlags           flags);
+
+GMenuItem *		amtk_factory_create_gmenu_item			(AmtkFactory *factory,
+									 const gchar *action_name);
+
+GMenuItem *		amtk_factory_create_gmenu_item_full		(AmtkFactory      *factory,
+									 const gchar      *action_name,
+									 AmtkFactoryFlags  flags);
 
 GtkToolItem *		amtk_factory_create_tool_button			(AmtkFactory *factory,
 									 const gchar *action_name);

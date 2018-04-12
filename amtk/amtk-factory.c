@@ -404,10 +404,9 @@ amtk_factory_set_default_flags (AmtkFactory      *factory,
 }
 
 static AmtkActionInfo *
-common_create (AmtkFactory       *factory,
-	       const gchar       *action_name,
-	       AmtkFactoryFlags   flags,
-	       GtkWidget        **widget)
+common_create (AmtkFactory      *factory,
+	       const gchar      *action_name,
+	       AmtkFactoryFlags  flags)
 {
 	AmtkActionInfoCentralStore *central_store;
 	AmtkActionInfo *action_info;
@@ -419,16 +418,7 @@ common_create (AmtkFactory       *factory,
 	{
 		g_warning ("AmtkFactory create function: action name '%s' not found.",
 			   action_name);
-
-		g_object_ref_sink (*widget);
-		g_object_unref (*widget);
-		*widget = NULL;
 		return NULL;
-	}
-
-	if ((flags & AMTK_FACTORY_IGNORE_GACTION) == 0)
-	{
-		gtk_actionable_set_action_name (GTK_ACTIONABLE (*widget), action_name);
 	}
 
 	if ((flags & AMTK_FACTORY_IGNORE_ACCELS) == 0 &&
@@ -447,6 +437,32 @@ common_create (AmtkFactory       *factory,
 }
 
 static AmtkActionInfo *
+common_create_widget (AmtkFactory       *factory,
+		      const gchar       *action_name,
+		      AmtkFactoryFlags   flags,
+		      GtkWidget        **widget)
+{
+	AmtkActionInfo *action_info;
+
+	action_info = common_create (factory, action_name, flags);
+
+	if (action_info == NULL)
+	{
+		g_object_ref_sink (*widget);
+		g_object_unref (*widget);
+		*widget = NULL;
+		return NULL;
+	}
+
+	if ((flags & AMTK_FACTORY_IGNORE_GACTION) == 0)
+	{
+		gtk_actionable_set_action_name (GTK_ACTIONABLE (*widget), action_name);
+	}
+
+	return action_info;
+}
+
+static AmtkActionInfo *
 common_create_menu_item (AmtkFactory       *factory,
 			 const gchar       *action_name,
 			 AmtkFactoryFlags   flags,
@@ -456,7 +472,7 @@ common_create_menu_item (AmtkFactory       *factory,
 	const gchar * const *accels;
 	const gchar *tooltip;
 
-	action_info = common_create (factory, action_name, flags, (GtkWidget **)menu_item);
+	action_info = common_create_widget (factory, action_name, flags, (GtkWidget **)menu_item);
 	if (action_info == NULL)
 	{
 		return NULL;
@@ -510,7 +526,7 @@ common_create_tool_button (AmtkFactory       *factory,
 	const gchar *icon_name;
 	const gchar *tooltip;
 
-	action_info = common_create (factory, action_name, flags, (GtkWidget **)tool_button);
+	action_info = common_create_widget (factory, action_name, flags, (GtkWidget **)tool_button);
 	if (action_info == NULL)
 	{
 		return NULL;
@@ -747,6 +763,90 @@ amtk_factory_create_simple_menu_full (AmtkFactory               *factory,
 	}
 
 	return GTK_WIDGET (menu);
+}
+
+/**
+ * amtk_factory_create_gmenu_item:
+ * @factory: an #AmtkFactory.
+ * @action_name: an action name.
+ *
+ * Calls amtk_factory_create_gmenu_item_full() with the
+ * #AmtkFactory:default-flags.
+ *
+ * Returns: (transfer full): a new #GMenuItem for @action_name.
+ * Since: 5.0
+ */
+GMenuItem *
+amtk_factory_create_gmenu_item (AmtkFactory *factory,
+				const gchar *action_name)
+{
+	g_return_val_if_fail (AMTK_IS_FACTORY (factory), NULL);
+	g_return_val_if_fail (action_name != NULL, NULL);
+
+	return amtk_factory_create_gmenu_item_full (factory,
+						    action_name,
+						    factory->priv->default_flags);
+}
+
+/**
+ * amtk_factory_create_gmenu_item_full:
+ * @factory: an #AmtkFactory.
+ * @action_name: an action name.
+ * @flags: #AmtkFactoryFlags.
+ *
+ * This function ignores the #AmtkFactory:default-flags property and takes the
+ * @flags argument instead.
+ *
+ * Creates a new #GMenuItem for @action_name. It ignores the tooltip, i.e. the
+ * return value of amtk_action_info_get_tooltip().
+ *
+ * Returns: (transfer full): a new #GMenuItem for @action_name.
+ * Since: 5.0
+ */
+GMenuItem *
+amtk_factory_create_gmenu_item_full (AmtkFactory      *factory,
+				     const gchar      *action_name,
+				     AmtkFactoryFlags  flags)
+{
+	AmtkActionInfo *action_info;
+	const gchar *label = NULL;
+	const gchar *detailed_action = NULL;
+	GMenuItem *menu_item;
+	const gchar *icon_name;
+
+	g_return_val_if_fail (AMTK_IS_FACTORY (factory), NULL);
+	g_return_val_if_fail (action_name != NULL, NULL);
+
+	action_info = common_create (factory, action_name, flags);
+	if (action_info == NULL)
+	{
+		return NULL;
+	}
+
+	if ((flags & AMTK_FACTORY_IGNORE_LABEL) == 0)
+	{
+		label = amtk_action_info_get_label (action_info);
+	}
+
+	if ((flags & AMTK_FACTORY_IGNORE_GACTION) == 0)
+	{
+		detailed_action = action_name;
+	}
+
+	menu_item = g_menu_item_new (label, detailed_action);
+
+	icon_name = amtk_action_info_get_icon_name (action_info);
+	if ((flags & AMTK_FACTORY_IGNORE_ICON) == 0 &&
+	    icon_name != NULL)
+	{
+		GIcon *icon;
+
+		icon = g_themed_icon_new (icon_name);
+		g_menu_item_set_icon (menu_item, icon);
+		g_object_unref (icon);
+	}
+
+	return menu_item;
 }
 
 /**
