@@ -134,6 +134,12 @@ amtk_factory_flags_get_type
 </SECTION>
 
 <SECTION>
+<FILE>amtk-gmenu</FILE>
+amtk_gmenu_append_item
+amtk_gmenu_append_section
+</SECTION>
+
+<SECTION>
 <FILE>amtk-menu-item</FILE>
 amtk_menu_item_get_long_description
 amtk_menu_item_set_long_description

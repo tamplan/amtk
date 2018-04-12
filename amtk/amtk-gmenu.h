@@ -1,7 +1,7 @@
 /*
  * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
  * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -17,26 +17,24 @@
  * along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AMTK_H
-#define AMTK_H
+#ifndef AMTK_GMENU_H
+#define AMTK_GMENU_H
 
-#define AMTK_H_INSIDE
+#if !defined (AMTK_H_INSIDE) && !defined (AMTK_COMPILATION)
+#error "Only <amtk/amtk.h> can be included directly."
+#endif
 
-#include <amtk/amtk-types.h>
-#include <amtk/amtk-enum-types.h>
+#include <gio/gio.h>
 
-#include <amtk/amtk-action-info.h>
-#include <amtk/amtk-action-info-store.h>
-#include <amtk/amtk-action-info-central-store.h>
-#include <amtk/amtk-action-map.h>
-#include <amtk/amtk-application-window.h>
-#include <amtk/amtk-factory.h>
-#include <amtk/amtk-gmenu.h>
-#include <amtk/amtk-init.h>
-#include <amtk/amtk-menu-item.h>
-#include <amtk/amtk-menu-shell.h>
-#include <amtk/amtk-utils.h>
+G_BEGIN_DECLS
 
-#undef AMTK_H_INSIDE
+void	amtk_gmenu_append_item		(GMenu     *menu,
+					 GMenuItem *item);
 
-#endif /* AMTK_H */
+void	amtk_gmenu_append_section	(GMenu       *menu,
+					 const gchar *label,
+					 GMenu       *section);
+
+G_END_DECLS
+
+#endif  /* AMTK_GMENU_H */
