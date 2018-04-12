@@ -13,8 +13,8 @@ TEST_PROGS =
 TEST_PROGS += test-headerbar
 test_headerbar_SOURCES = test-headerbar.c
 
-TEST_PROGS += test-menu
-test_menu_SOURCES = test-menu.c
+TEST_PROGS += test-traditional-ui
+test_traditional_ui_SOURCES = test-traditional-ui.c
 
 noinst_PROGRAMS = $(TEST_PROGS)
 
