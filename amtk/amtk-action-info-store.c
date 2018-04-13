@@ -1,7 +1,7 @@
 /*
  * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
  * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -193,6 +193,62 @@ amtk_action_info_store_lookup (AmtkActionInfoStore *store,
 	g_return_val_if_fail (action_name != NULL, NULL);
 
 	return g_hash_table_lookup (store->priv->hash_table, action_name);
+}
+
+static void
+set_accels_to_app_cb (gpointer key,
+		      gpointer value,
+		      gpointer user_data)
+{
+	const gchar *action_name = key;
+	const AmtkActionInfo *action_info = value;
+	GtkApplication *application = GTK_APPLICATION (user_data);
+	const gchar * const *accels;
+
+	accels = amtk_action_info_get_accels (action_info);
+	gtk_application_set_accels_for_action (application, action_name, accels);
+}
+
+/**
+ * amtk_action_info_store_set_all_accels_to_app:
+ * @store: an #AmtkActionInfoStore.
+ * @application: a #GtkApplication.
+ *
+ * Calls gtk_application_set_accels_for_action() for all #AmtkActionInfo's part
+ * of @store with the accelerators returned by amtk_action_info_get_accels().
+ * This function does *not* call amtk_action_info_mark_as_used(), because if it
+ * did it would not be possible to detect dead code in @store with
+ * amtk_action_info_store_check_all_used().
+ *
+ * This function is not recommended if @store is provided by a library, because
+ * a future version of the library may add accelerators that are not wanted in
+ * the application. So for a library store, you should let #AmtkFactory call
+ * gtk_application_set_accels_for_action().
+ *
+ * This function can be convenient for an application store, in combination with
+ * %AMTK_FACTORY_IGNORE_ACCELS_FOR_APP (and/or having a %NULL #GtkApplication in
+ * #AmtkFactory). It has the advantage that
+ * gtk_application_set_accels_for_action() is called only once per action, not
+ * each time that a #GtkApplicationWindow is created.
+ *
+ * This function can also be useful if – for some actions – the objects are not
+ * created directly with #AmtkFactory on application startup, but are created
+ * later, on demand. For example to create a #GtkShortcutsWindow with
+ * #AmtkFactory, containing information about actions that are not added to any
+ * menu or toolbar.
+ *
+ * Since: 5.0
+ */
+void
+amtk_action_info_store_set_all_accels_to_app (AmtkActionInfoStore *store,
+					      GtkApplication      *application)
+{
+	g_return_if_fail (AMTK_IS_ACTION_INFO_STORE (store));
+	g_return_if_fail (GTK_IS_APPLICATION (application));
+
+	g_hash_table_foreach (store->priv->hash_table,
+			      set_accels_to_app_cb,
+			      application);
 }
 
 static void

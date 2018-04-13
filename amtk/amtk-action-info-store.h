@@ -1,7 +1,7 @@
 /*
  * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
  * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -24,7 +24,7 @@
 #error "Only <amtk/amtk.h> can be included directly."
 #endif
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
 #include <amtk/amtk-types.h>
 
 G_BEGIN_DECLS
@@ -67,6 +67,9 @@ void			amtk_action_info_store_add_entries		(AmtkActionInfoStore       *store,
 
 AmtkActionInfo *	amtk_action_info_store_lookup			(AmtkActionInfoStore *store,
 									 const gchar         *action_name);
+
+void			amtk_action_info_store_set_all_accels_to_app	(AmtkActionInfoStore *store,
+									 GtkApplication      *application);
 
 void			amtk_action_info_store_check_all_used		(AmtkActionInfoStore *store);
 

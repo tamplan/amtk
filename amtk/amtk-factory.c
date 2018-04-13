@@ -38,7 +38,9 @@
  * that action, if any). Note that gtk_application_set_accels_for_action() is
  * called by factory functions and not by amtk_action_info_store_add(), so that
  * libraries can provide their own store and the accelerators are set to the
- * #GtkApplication only if an #AmtkActionInfo is actually used.
+ * #GtkApplication only if an #AmtkActionInfo is actually used. For an
+ * application store, amtk_action_info_store_set_all_accels_to_app() is an
+ * alternative.
  *
  * #AmtkFactoryFlags permits to control how a factory function creates the
  * object, to ignore some steps. Factory functions are declined in two variants:
