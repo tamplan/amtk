@@ -39,10 +39,13 @@
  * #AmtkActionInfoCentralStore. Examples of namespaced action names:
  * `"win.amtk-save"` or `"app.amtk-quit"`.
  *
- * Once an #AmtkActionInfo has been added to an #AmtkActionInfoStore, it is
- * discouraged to modify it afterwards. An #AmtkActionInfoStore is meant to be
- * something static, created on application startup. See the [paragraph about
- * static objects in AmtkFactory][amtk-factory-static-objects].
+ * An #AmtkActionInfoStore is meant to be something static, created on
+ * application startup. See the [paragraph about static objects in
+ * AmtkFactory][amtk-factory-static-objects]. So once an #AmtkActionInfo has
+ * been added to an #AmtkActionInfoStore, it is discouraged to modify it
+ * afterwards; an exception is to call amtk_action_info_set_accels() with
+ * several accelerators after using amtk_action_info_store_add_entries()
+ * (because an #AmtkActionInfoEntry can contain only one accelerator).
  */
 
 struct _AmtkActionInfoStorePrivate
