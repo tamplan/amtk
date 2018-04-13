@@ -33,6 +33,7 @@ add_action_info_entries (void)
 		/* action, icon, label, accel */
 		{ "win.show-side-panel", NULL, "_Side Panel", "F12" },
 		{ "win.print", NULL, "_Print", "<Control>p" },
+		{ "win.shortcuts-window", NULL, "_Keyboard Shortcuts", NULL },
 		{ NULL }
 	};
 
@@ -52,11 +53,57 @@ startup_cb (GApplication *g_app,
 }
 
 static void
-print_activate_cb (GSimpleAction *about_action,
+print_activate_cb (GSimpleAction *action,
 		   GVariant      *parameter,
 		   gpointer       user_data)
 {
 	g_print ("Print\n");
+}
+
+static void
+shortcuts_window_activate_cb (GSimpleAction *action,
+			      GVariant      *parameter,
+			      gpointer       user_data)
+{
+	GtkShortcutsWindow *window;
+	GtkWidget *section;
+	GtkWidget *group;
+	GtkWidget *shortcut;
+
+	/* TODO Add AmtkFactory function, and maybe some convenience functions
+	 * too.
+	 */
+
+	/* Create group */
+	group = g_object_new (GTK_TYPE_SHORTCUTS_GROUP,
+			      "visible", TRUE,
+			      "title", "General",
+			      NULL);
+
+	shortcut = g_object_new (GTK_TYPE_SHORTCUTS_SHORTCUT,
+				 "visible", TRUE,
+				 "title", "Find in current page",
+				 "accelerator", "<Control>f",
+				 NULL);
+	gtk_container_add (GTK_CONTAINER (group), shortcut);
+
+	shortcut = g_object_new (GTK_TYPE_SHORTCUTS_SHORTCUT,
+				 "visible", TRUE,
+				 "title", "Open a new tab",
+				 "accelerator", "<Control>t",
+				 NULL);
+	gtk_container_add (GTK_CONTAINER (group), shortcut);
+
+	/* Create section and window */
+	section = g_object_new (GTK_TYPE_SHORTCUTS_SECTION,
+				"visible", TRUE,
+				NULL);
+	gtk_container_add (GTK_CONTAINER (section), group);
+
+	window = g_object_new (GTK_TYPE_SHORTCUTS_WINDOW, NULL);
+	gtk_container_add (GTK_CONTAINER (window), section);
+
+	gtk_widget_show_all (GTK_WIDGET (window));
 }
 
 static void
@@ -68,6 +115,7 @@ add_win_actions (GtkApplicationWindow *window,
 	const GActionEntry entries[] =
 	{
 		{ "print", print_activate_cb },
+		{ "shortcuts-window", shortcuts_window_activate_cb },
 		{ NULL }
 	};
 
@@ -91,6 +139,7 @@ create_window_menu (void)
 	factory = amtk_factory_new_with_default_application ();
 	amtk_gmenu_append_item (menu, amtk_factory_create_gmenu_item (factory, "win.show-side-panel"));
 	amtk_gmenu_append_item (menu, amtk_factory_create_gmenu_item (factory, "win.print"));
+	amtk_gmenu_append_item (menu, amtk_factory_create_gmenu_item (factory, "win.shortcuts-window"));
 	g_object_unref (factory);
 
 	g_menu_freeze (menu);
