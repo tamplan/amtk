@@ -66,9 +66,9 @@ shortcuts_window_activate_cb (GSimpleAction *action,
 			      gpointer       user_data)
 {
 	GtkShortcutsWindow *window;
-	GtkWidget *section;
-	GtkWidget *group;
-	GtkWidget *shortcut;
+	GtkContainer *section;
+	GtkContainer *group;
+	AmtkFactory *factory;
 
 	/* TODO Add AmtkFactory function, and maybe some convenience functions
 	 * too.
@@ -80,28 +80,20 @@ shortcuts_window_activate_cb (GSimpleAction *action,
 			      "title", "General",
 			      NULL);
 
-	shortcut = g_object_new (GTK_TYPE_SHORTCUTS_SHORTCUT,
-				 "visible", TRUE,
-				 "title", "Find in current page",
-				 "accelerator", "<Control>f",
-				 NULL);
-	gtk_container_add (GTK_CONTAINER (group), shortcut);
-
-	shortcut = g_object_new (GTK_TYPE_SHORTCUTS_SHORTCUT,
-				 "visible", TRUE,
-				 "title", "Open a new tab",
-				 "accelerator", "<Control>t",
-				 NULL);
-	gtk_container_add (GTK_CONTAINER (group), shortcut);
+	factory = amtk_factory_new (NULL);
+	amtk_factory_set_default_flags (factory, AMTK_FACTORY_IGNORE_GACTION);
+	gtk_container_add (group, amtk_factory_create_shortcut (factory, "win.show-side-panel"));
+	gtk_container_add (group, amtk_factory_create_shortcut (factory, "win.print"));
+	g_object_unref (factory);
 
 	/* Create section and window */
 	section = g_object_new (GTK_TYPE_SHORTCUTS_SECTION,
 				"visible", TRUE,
 				NULL);
-	gtk_container_add (GTK_CONTAINER (section), group);
+	gtk_container_add (section, GTK_WIDGET (group));
 
 	window = g_object_new (GTK_TYPE_SHORTCUTS_WINDOW, NULL);
-	gtk_container_add (GTK_CONTAINER (window), section);
+	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (section));
 
 	gtk_widget_show_all (GTK_WIDGET (window));
 }

@@ -143,6 +143,13 @@ GtkMenuToolButton *	amtk_factory_create_menu_tool_button_full	(AmtkFactory      
 									 const gchar      *action_name,
 									 AmtkFactoryFlags  flags);
 
+GtkWidget *		amtk_factory_create_shortcut			(AmtkFactory *factory,
+									 const gchar *action_name);
+
+GtkWidget *		amtk_factory_create_shortcut_full		(AmtkFactory      *factory,
+									 const gchar      *action_name,
+									 AmtkFactoryFlags  flags);
+
 G_END_DECLS
 
 #endif /* AMTK_FACTORY_H */

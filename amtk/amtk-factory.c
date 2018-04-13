@@ -970,3 +970,118 @@ amtk_factory_create_menu_tool_button_full (AmtkFactory      *factory,
 
 	return GTK_MENU_TOOL_BUTTON (menu_tool_button);
 }
+
+/**
+ * amtk_factory_create_shortcut:
+ * @factory: an #AmtkFactory.
+ * @action_name: an action name.
+ *
+ * Calls amtk_factory_create_shortcut_full() with the
+ * #AmtkFactory:default-flags.
+ *
+ * Returns: (transfer floating): a new #GtkShortcutsShortcut for @action_name.
+ * Since: 5.0
+ */
+GtkWidget *
+amtk_factory_create_shortcut (AmtkFactory *factory,
+			      const gchar *action_name)
+{
+	g_return_val_if_fail (AMTK_IS_FACTORY (factory), NULL);
+	g_return_val_if_fail (action_name != NULL, NULL);
+
+	return amtk_factory_create_shortcut_full (factory,
+						  action_name,
+						  factory->priv->default_flags);
+}
+
+/**
+ * amtk_factory_create_shortcut_full:
+ * @factory: an #AmtkFactory.
+ * @action_name: an action name.
+ * @flags: #AmtkFactoryFlags.
+ *
+ * This function ignores the #AmtkFactory:default-flags property and takes the
+ * @flags argument instead.
+ *
+ * This function creates a new #GtkShortcutsShortcut for @action_name.
+ *
+ * For the #GtkShortcutsShortcut:title, the tooltip has the priorioty, with the
+ * label as fallback if the tooltip is %NULL. This can be controlled with the
+ * %AMTK_FACTORY_IGNORE_TOOLTIP and %AMTK_FACTORY_IGNORE_LABEL flags.
+ *
+ * The #GtkShortcutsShortcut:accelerator property is set with only the *first*
+ * accel returned by amtk_action_info_get_accels(). This step can be ignored
+ * with %AMTK_FACTORY_IGNORE_ACCELS or %AMTK_FACTORY_IGNORE_ACCELS_FOR_DOC.
+ *
+ * The #GtkShortcutsShortcut:action-name property is set to @action_name if the
+ * %AMTK_FACTORY_IGNORE_GACTION flag isn't set. Note that with
+ * #GtkShortcutsShortcut:action-name all accelerators are displayed (if set to
+ * the #GtkApplication).
+ *
+ * So depending on whether you want to show only the first accelerator or all
+ * accelerators, you need to set @flags appropriately.
+ *
+ * Returns: (transfer floating): a new #GtkShortcutsShortcut for @action_name.
+ * Since: 5.0
+ */
+GtkWidget *
+amtk_factory_create_shortcut_full (AmtkFactory      *factory,
+				   const gchar      *action_name,
+				   AmtkFactoryFlags  flags)
+{
+	AmtkActionInfo *action_info;
+	GtkWidget *shortcut;
+	const gchar *tooltip;
+	const gchar *label;
+
+	g_return_val_if_fail (AMTK_IS_FACTORY (factory), NULL);
+	g_return_val_if_fail (action_name != NULL, NULL);
+
+	action_info = common_create (factory, action_name, flags);
+	if (action_info == NULL)
+	{
+		return NULL;
+	}
+
+	shortcut = g_object_new (GTK_TYPE_SHORTCUTS_SHORTCUT, NULL);
+	gtk_widget_show (shortcut);
+
+	tooltip = amtk_action_info_get_tooltip (action_info);
+	label = amtk_action_info_get_label (action_info);
+
+	if ((flags & AMTK_FACTORY_IGNORE_TOOLTIP) == 0 &&
+	    tooltip != NULL)
+	{
+		g_object_set (shortcut,
+			      "title", tooltip,
+			      NULL);
+	}
+	else if ((flags & AMTK_FACTORY_IGNORE_LABEL) == 0 &&
+		 label != NULL)
+	{
+		/* TODO remove mnemonic. */
+		g_object_set (shortcut,
+			      "title", label,
+			      NULL);
+	}
+
+	if ((flags & AMTK_FACTORY_IGNORE_ACCELS) == 0 &&
+	    (flags & AMTK_FACTORY_IGNORE_ACCELS_FOR_DOC) == 0)
+	{
+		const gchar * const *accels;
+
+		accels = amtk_action_info_get_accels (action_info);
+		g_object_set (shortcut,
+			      "accelerator", accels[0],
+			      NULL);
+	}
+
+	if ((flags & AMTK_FACTORY_IGNORE_GACTION) == 0)
+	{
+		g_object_set (shortcut,
+			      "action-name", action_name,
+			      NULL);
+	}
+
+	return shortcut;
+}
