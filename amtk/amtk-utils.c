@@ -110,6 +110,49 @@ _amtk_utils_strv_copy (const gchar * const *strv)
 	return new_strv;
 }
 
+/**
+ * amtk_utils_remove_mnemonic:
+ * @str: a string.
+ *
+ * Removes the mnemonics from @str. Single underscores are removed, and two
+ * consecutive underscores are replaced by one underscore (see the documentation
+ * of gtk_label_new_with_mnemonic()).
+ *
+ * Returns: (transfer full): the new string with the mnemonics removed. Free
+ * with g_free() when no longer needed.
+ * Since: 5.0
+ */
+gchar *
+amtk_utils_remove_mnemonic (const gchar *str)
+{
+	gchar *new_str;
+	gint str_pos;
+	gint new_str_pos = 0;
+	gboolean prev_char_is_underscore_skipped = FALSE;
+
+	g_return_val_if_fail (str != NULL, NULL);
+
+	new_str = g_malloc (strlen (str) + 1);
+
+	for (str_pos = 0; str[str_pos] != '\0'; str_pos++)
+	{
+		gchar cur_char = str[str_pos];
+
+		if (cur_char == '_' && !prev_char_is_underscore_skipped)
+		{
+			prev_char_is_underscore_skipped = TRUE;
+		}
+		else
+		{
+			new_str[new_str_pos++] = cur_char;
+			prev_char_is_underscore_skipped = FALSE;
+		}
+	}
+
+	new_str[new_str_pos] = '\0';
+	return new_str;
+}
+
 static gint
 get_menu_item_position (GtkMenuShell *menu_shell,
 			GtkMenuItem  *item)
