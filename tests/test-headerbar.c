@@ -66,7 +66,8 @@ shortcuts_window_activate_cb (GSimpleAction *action,
 			      GVariant      *parameter,
 			      gpointer       user_data)
 {
-	GtkShortcutsWindow *window;
+	GtkApplicationWindow *app_window = GTK_APPLICATION_WINDOW (user_data);
+	GtkShortcutsWindow *shortcuts_window;
 	GtkContainer *section;
 	GtkContainer *group;
 	AmtkFactory *factory;
@@ -84,10 +85,10 @@ shortcuts_window_activate_cb (GSimpleAction *action,
 	section = amtk_shortcuts_section_new (NULL);
 	gtk_container_add (section, GTK_WIDGET (group));
 
-	window = amtk_shortcuts_window_new ();
-	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (section));
+	shortcuts_window = amtk_shortcuts_window_new (GTK_WINDOW (app_window));
+	gtk_container_add (GTK_CONTAINER (shortcuts_window), GTK_WIDGET (section));
 
-	gtk_widget_show_all (GTK_WIDGET (window));
+	gtk_widget_show_all (GTK_WIDGET (shortcuts_window));
 }
 
 static void
@@ -105,7 +106,7 @@ add_win_actions (GtkApplicationWindow *window,
 
 	amtk_action_map_add_action_entries_check_dups (G_ACTION_MAP (window),
 						       entries, -1,
-						       NULL);
+						       window);
 
 	side_panel_action = g_property_action_new ("show-side-panel", side_panel, "visible");
 	g_action_map_add_action (G_ACTION_MAP (window), G_ACTION (side_panel_action));

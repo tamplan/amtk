@@ -33,19 +33,31 @@
 
 /**
  * amtk_shortcuts_window_new:
+ * @parent: the #GtkWindow:transient-for.
  *
- * Creates a new #GtkShortcutsWindow. It is on purpose that the return type is
- * #GtkShortcutsWindow, not #GtkWidget or something else, so in C when you
- * declare the variable as #GtkShortcutsWindow it's easier to find it later
- * (searching "GtkShortcuts" will return something in your codebase).
+ * Creates a new #GtkShortcutsWindow. The #GtkWindow:modal property is set to
+ * %TRUE.
+ *
+ * It is on purpose that the return type is #GtkShortcutsWindow, not #GtkWidget
+ * or something else, so in C when you declare the variable as
+ * #GtkShortcutsWindow it's easier to find it later (searching "GtkShortcuts"
+ * will return something in your codebase).
  *
  * Returns: (transfer floating): a new #GtkShortcutsWindow.
  * Since: 5.0
  */
 GtkShortcutsWindow *
-amtk_shortcuts_window_new (void)
+amtk_shortcuts_window_new (GtkWindow *parent)
 {
-	return g_object_new (GTK_TYPE_SHORTCUTS_WINDOW, NULL);
+	GtkShortcutsWindow *shortcuts_window;
+
+	g_return_val_if_fail (GTK_IS_WINDOW (parent), NULL);
+
+	shortcuts_window = g_object_new (GTK_TYPE_SHORTCUTS_WINDOW, NULL);
+	gtk_window_set_modal (GTK_WINDOW (shortcuts_window), TRUE);
+	gtk_window_set_transient_for (GTK_WINDOW (shortcuts_window), parent);
+
+	return shortcuts_window;
 }
 
 /**

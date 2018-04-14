@@ -28,7 +28,7 @@
 
 G_BEGIN_DECLS
 
-GtkShortcutsWindow *	amtk_shortcuts_window_new	(void);
+GtkShortcutsWindow *	amtk_shortcuts_window_new	(GtkWindow *parent);
 
 GtkContainer *		amtk_shortcuts_section_new	(const gchar *title);
 
