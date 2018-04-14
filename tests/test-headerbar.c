@@ -185,6 +185,8 @@ activate_cb (GApplication *g_app,
 
 	gtk_container_add (GTK_CONTAINER (window), hgrid);
 	gtk_widget_show_all (window);
+
+	amtk_action_info_store_check_all_used (action_info_store);
 }
 
 int
