@@ -28,13 +28,16 @@ static AmtkActionInfoStore *action_info_store = NULL;
 static void
 add_action_info_entries (void)
 {
+	const gchar *accels[] = {NULL, NULL, NULL};
+	AmtkActionInfo *action_info;
+
 	const AmtkActionInfoEntry entries[] =
 	{
 		/* action, icon, label, accel, tooltip */
 		{ "win.show-side-panel", NULL, "_Side Panel", "F9",
 		  "Toggle side panel visibility" },
 		{ "win.print", NULL, "_Print", "<Control>p" },
-		{ "win.shortcuts-window", NULL, "_Keyboard Shortcuts", NULL },
+		{ "win.shortcuts-window", NULL, "_Keyboard Shortcuts" },
 		{ NULL }
 	};
 
@@ -44,6 +47,11 @@ add_action_info_entries (void)
 	amtk_action_info_store_add_entries (action_info_store,
 					    entries, -1,
 					    NULL);
+
+	accels[0] = "<Control>F1";
+	accels[1] = "<Control>question";
+	action_info = amtk_action_info_store_lookup (action_info_store, "win.shortcuts-window");
+	amtk_action_info_set_accels (action_info, accels);
 }
 
 static void
