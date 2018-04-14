@@ -64,7 +64,7 @@ add_action_info_entries (void)
 }
 
 static void
-quit_activate_cb (GSimpleAction *quit_action,
+quit_activate_cb (GSimpleAction *action,
 		  GVariant      *parameter,
 		  gpointer       user_data)
 {
@@ -72,7 +72,7 @@ quit_activate_cb (GSimpleAction *quit_action,
 }
 
 static void
-about_activate_cb (GSimpleAction *about_action,
+about_activate_cb (GSimpleAction *action,
 		   GVariant      *parameter,
 		   gpointer       user_data)
 {
