@@ -1,7 +1,7 @@
 /*
  * This file is part of Amtk - Actions, Menus and Toolbars Kit
  *
- * Copyright 2017 - Sébastien Wilmet <swilmet@gnome.org>
+ * Copyright 2017, 2018 - Sébastien Wilmet <swilmet@gnome.org>
  *
  * Amtk is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -278,7 +278,8 @@ amtk_action_info_set_icon_name (AmtkActionInfo *info,
  * amtk_action_info_get_label:
  * @info: an #AmtkActionInfo.
  *
- * Gets the label. The label has normally a mnemonic.
+ * Gets the label. The label has normally a mnemonic. To remove the mnemonic,
+ * there is the amtk_utils_remove_mnemonic() function.
  *
  * Returns: (nullable): the label (i.e. a short description), or %NULL.
  * Since: 2.0
@@ -296,7 +297,8 @@ amtk_action_info_get_label (const AmtkActionInfo *info)
  * @info: an #AmtkActionInfo.
  * @label: (nullable): the label (i.e. a short description), or %NULL.
  *
- * Sets the label with a mnemonic.
+ * Sets the label with a mnemonic. To know how to encode the mnemonic, see the
+ * documentation of gtk_label_new_with_mnemonic().
  *
  * Since: 2.0
  */
