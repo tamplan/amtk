@@ -22,6 +22,7 @@ amtk_public_headers =				\
 	amtk-init.h				\
 	amtk-menu-item.h			\
 	amtk-menu-shell.h			\
+	amtk-shortcuts.h			\
 	amtk-types.h				\
 	amtk-utils.h
 
@@ -36,6 +37,7 @@ amtk_public_c_files =				\
 	amtk-init.c				\
 	amtk-menu-item.c			\
 	amtk-menu-shell.c			\
+	amtk-shortcuts.c			\
 	amtk-utils.c
 
 amtk_built_public_headers =	\

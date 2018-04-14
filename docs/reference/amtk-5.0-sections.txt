@@ -167,6 +167,13 @@ amtk_menu_shell_get_type
 </SECTION>
 
 <SECTION>
+<FILE>amtk-shortcuts</FILE>
+amtk_shortcuts_window_new
+amtk_shortcuts_section_new
+amtk_shortcuts_group_new
+</SECTION>
+
+<SECTION>
 <FILE>amtk-utils</FILE>
 amtk_utils_remove_mnemonic
 amtk_utils_recent_chooser_menu_get_item_uri

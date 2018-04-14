@@ -70,15 +70,8 @@ shortcuts_window_activate_cb (GSimpleAction *action,
 	GtkContainer *group;
 	AmtkFactory *factory;
 
-	/* TODO Add AmtkFactory function, and maybe some convenience functions
-	 * too.
-	 */
-
 	/* Create group */
-	group = g_object_new (GTK_TYPE_SHORTCUTS_GROUP,
-			      "visible", TRUE,
-			      "title", "General",
-			      NULL);
+	group = amtk_shortcuts_group_new ("General");
 
 	factory = amtk_factory_new (NULL);
 	amtk_factory_set_default_flags (factory, AMTK_FACTORY_IGNORE_GACTION);
@@ -87,12 +80,10 @@ shortcuts_window_activate_cb (GSimpleAction *action,
 	g_object_unref (factory);
 
 	/* Create section and window */
-	section = g_object_new (GTK_TYPE_SHORTCUTS_SECTION,
-				"visible", TRUE,
-				NULL);
+	section = amtk_shortcuts_section_new (NULL);
 	gtk_container_add (section, GTK_WIDGET (group));
 
-	window = g_object_new (GTK_TYPE_SHORTCUTS_WINDOW, NULL);
+	window = amtk_shortcuts_window_new ();
 	gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (section));
 
 	gtk_widget_show_all (GTK_WIDGET (window));
