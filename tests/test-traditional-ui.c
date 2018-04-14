@@ -46,8 +46,8 @@ add_action_info_entries (void)
 		{ "app.about", "help-about", "_About", NULL,
 		  "About this application" },
 
-		{ "win.show-side-panel", NULL, "_Side Panel", "F12",
-		  "Show or hide the side panel" },
+		{ "win.show-side-panel", NULL, "_Side Panel", "F9",
+		  "Toggle side panel visibility" },
 	};
 
 	g_assert (action_info_store == NULL);

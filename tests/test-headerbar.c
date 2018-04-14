@@ -30,8 +30,9 @@ add_action_info_entries (void)
 {
 	const AmtkActionInfoEntry entries[] =
 	{
-		/* action, icon, label, accel */
-		{ "win.show-side-panel", NULL, "_Side Panel", "F12" },
+		/* action, icon, label, accel, tooltip */
+		{ "win.show-side-panel", NULL, "_Side Panel", "F9",
+		  "Toggle side panel visibility" },
 		{ "win.print", NULL, "_Print", "<Control>p" },
 		{ "win.shortcuts-window", NULL, "_Keyboard Shortcuts", NULL },
 		{ NULL }
