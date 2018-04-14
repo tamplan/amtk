@@ -21,6 +21,7 @@
 #include "amtk-action-info.h"
 #include "amtk-action-info-central-store.h"
 #include "amtk-menu-item.h"
+#include "amtk-utils.h"
 #include "amtk-enum-types.h"
 
 /**
@@ -1006,7 +1007,8 @@ amtk_factory_create_shortcut (AmtkFactory *factory,
  * This function creates a new #GtkShortcutsShortcut for @action_name.
  *
  * For the #GtkShortcutsShortcut:title, the tooltip has the priorioty, with the
- * label as fallback if the tooltip is %NULL. This can be controlled with the
+ * label as fallback if the tooltip is %NULL (the mnemonic is removed from the
+ * label with amtk_utils_remove_mnemonic()). This can be controlled with the
  * %AMTK_FACTORY_IGNORE_TOOLTIP and %AMTK_FACTORY_IGNORE_LABEL flags.
  *
  * The #GtkShortcutsShortcut:accelerator property is set with only the *first*
@@ -1059,10 +1061,15 @@ amtk_factory_create_shortcut_full (AmtkFactory      *factory,
 	else if ((flags & AMTK_FACTORY_IGNORE_LABEL) == 0 &&
 		 label != NULL)
 	{
-		/* TODO remove mnemonic. */
+		gchar *label_without_mnemonic;
+
+		label_without_mnemonic = amtk_utils_remove_mnemonic (label);
+
 		g_object_set (shortcut,
-			      "title", label,
+			      "title", label_without_mnemonic,
 			      NULL);
+
+		g_free (label_without_mnemonic);
 	}
 
 	if ((flags & AMTK_FACTORY_IGNORE_ACCELS) == 0 &&
