@@ -29,19 +29,19 @@
  * @Short_description: Factory functions
  * @Title: AmtkFactory
  *
- * #AmtkFactory contains functions to create menu or toolbar items from
- * #AmtkActionInfo's. A factory function accesses an #AmtkActionInfo from the
- * #AmtkActionInfoCentralStore.
+ * #AmtkFactory contains functions to create various objects such as a menu
+ * item, a toolbar item or a #GtkShortcutsShortcut, from the information
+ * provided by an #AmtkActionInfo. A factory function accesses an
+ * #AmtkActionInfo from the #AmtkActionInfoCentralStore.
  *
  * A #GtkApplication can be associated so that factory functions can call
  * gtk_application_set_accels_for_action() with the accelerators returned by
- * amtk_action_info_get_accels() (this erases previously set accelerators for
- * that action, if any). Note that gtk_application_set_accels_for_action() is
- * called by factory functions and not by amtk_action_info_store_add(), so that
- * libraries can provide their own store and the accelerators are set to the
- * #GtkApplication only if an #AmtkActionInfo is actually used. For an
- * application store, amtk_action_info_store_set_all_accels_to_app() is an
- * alternative.
+ * amtk_action_info_get_accels(). Note that
+ * gtk_application_set_accels_for_action() is called by factory functions and
+ * not by amtk_action_info_store_add(), so that libraries can provide their own
+ * store and the accelerators are set to the #GtkApplication only if an
+ * #AmtkActionInfo is actually used. For an application store,
+ * amtk_action_info_store_set_all_accels_to_app() is an alternative.
  *
  * #AmtkFactoryFlags permits to control how a factory function creates the
  * object, to ignore some steps. Factory functions are declined in two variants:
@@ -177,6 +177,11 @@
  *   return GTK_WIDGET (toolbar);
  * }
  * ]|
+ *
+ * # Modern UI with a GtkHeaderBar
+ *
+ * To have an example code, see `tests/test-headerbar.c` in the git repository
+ * of Amtk.
  */
 
 struct _AmtkFactoryPrivate
