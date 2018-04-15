@@ -1,3 +1,15 @@
+News in 4.99.1, 2018-04-15
+--------------------------
+* Move Amtk to its own git repository (it was initially developed in Tepl).
+* Bump API/major version to 5, to avoid any problem if Tepl 4.0 is installed at
+  the same time (which contains amtk-4).
+* AmtkFactory: add functions to create a simple GtkMenu directly from an array
+  of AmtkActionInfoEntry's (will be useful in gnome-latex).
+* Extend Amtk to support a GUI with a GtkHeaderBar (now used in Devhelp):
+ - AmtkFactory: add functions to create GMenuItem's and GtkShortcutsShortcut's.
+ - Add convenience functions to create a GMenu and a GtkShortcutsWindow.
+ - Add amtk_action_info_store_set_all_accels_to_app().
+
 News in 3.99.1, 2017-12-09
 --------------------------
 
