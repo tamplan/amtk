@@ -7,7 +7,7 @@ m4_define(amtk_package_version, 4.99.2)
 
 AC_INIT([Amtk],
 	[amtk_package_version],
-	[https://gitlab.gnome.org/GNOME/tepl/issues],
+	[https://gitlab.gnome.org/GNOME/amtk/issues],
 	[amtk],
 	[https://wiki.gnome.org/Projects/Amtk])
 

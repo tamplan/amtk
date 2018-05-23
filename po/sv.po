@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tepl master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/tepl/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/amtk/issues\n"
 "POT-Creation-Date: 2018-02-27 19:31+0000\n"
 "PO-Revision-Date: 2018-03-11 22:01+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"

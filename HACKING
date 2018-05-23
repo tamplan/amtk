@@ -3,10 +3,8 @@ How to contribute to Amtk
 
 Amtk follows the same guidelines and code conventions as GtkSourceView:
 
-    https://git.gnome.org/browse/gtksourceview/tree/HACKING
+    https://gitlab.gnome.org/GNOME/gtksourceview/blob/master/HACKING
 
-To contribute, send a pull request by e-mail to the maintainer.
+The Amtk GitLab:
 
-Read the following wiki page to know the conventions for the commit messages:
-
-    https://wiki.gnome.org/Git/CommitMessages
+    https://gitlab.gnome.org/GNOME/amtk

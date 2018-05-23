@@ -13,7 +13,7 @@ suitable for both a traditional UI or a modern UI with a GtkHeaderBar.</descript
   <homepage rdf:resource="https://wiki.gnome.org/Projects/Amtk" />
   <mailing-list rdf:resource="https://mail.gnome.org/mailman/listinfo/gnome-devtools" />
   <download-page rdf:resource="https://download.gnome.org/sources/amtk/" />
-  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/tepl/issues" />
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/amtk/issues" />
 
   <programming-language>C</programming-language>
 
