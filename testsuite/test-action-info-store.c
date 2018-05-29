@@ -64,7 +64,7 @@ int
 main (int    argc,
       char **argv)
 {
-	gtk_test_init (&argc, &argv);
+	g_test_init (&argc, &argv, NULL);
 
 	g_test_add_func ("/action-info-store/add-entries", test_add_entries);
 
