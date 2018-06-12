@@ -83,33 +83,6 @@ _amtk_utils_replace_home_dir_with_tilde (const gchar *filename)
 	return g_strdup (filename);
 }
 
-/* Deep copy of @strv. */
-gchar **
-_amtk_utils_strv_copy (const gchar * const *strv)
-{
-	guint length;
-	gchar **new_strv;
-	guint i;
-
-	if (strv == NULL)
-	{
-		return NULL;
-	}
-
-	length = g_strv_length ((gchar **)strv);
-
-	new_strv = g_malloc ((length + 1) * sizeof (gchar *));
-
-	for (i = 0; i < length; i++)
-	{
-		new_strv[i] = g_strdup (strv[i]);
-	}
-
-	new_strv[length] = NULL;
-
-	return new_strv;
-}
-
 /**
  * amtk_utils_remove_mnemonic:
  * @str: a string.

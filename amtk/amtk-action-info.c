@@ -387,7 +387,7 @@ amtk_action_info_set_accels (AmtkActionInfo      *info,
 	g_return_if_fail (accels != NULL);
 
 	g_strfreev (info->accels);
-	info->accels = _amtk_utils_strv_copy (accels);
+	info->accels = g_strdupv ((gchar **) accels);
 }
 
 /**
