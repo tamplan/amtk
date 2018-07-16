@@ -1,3 +1,9 @@
+News in 5.0.0, 2018-07-16
+-------------------------
+* Moved to GNOME GitLab instance.
+* Some minor improvements.
+* Some new translations.
+
 News in 4.99.1, 2018-04-15
 --------------------------
 * Move Amtk to its own git repository (it was initially developed in Tepl).
