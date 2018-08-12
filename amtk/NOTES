@@ -4,8 +4,15 @@ Amtk notes
 TODO list
 ---------
 
+- Support detailed GAction names in factory functions:
+	- In AmtkActionInfo, document that the "action name" can be a detailed
+	  action name, with a reference to g_action_parse_detailed_name().
+	- In AmtkFactory, call gtk_actionable_set_detailed_action_name() and
+	  adapt docs.
+	- Adapt docs and code in other classes if needed (but I think it's only
+	  in AmtkActionInfo and AmtkFactory).
+
 - Implement more factory functions.
-- Support detailed GAction names in factory functions.
 
 Other possible things to do
 ---------------------------
@@ -23,7 +30,9 @@ Other possible things to do
   accordingly.
 
 - Add one more sanity check: check that a GAction is *implemented* when (or
-  after) creating a menu or toolbar item for that action?
+  after) creating a menu or toolbar item for that action? Because currently
+  when the GAction is not implemented, the menu/toolbar item is just
+  insensitive, there is no warning.
 
 - An AmtkActionInfo could have a field for the default AmtkFactoryFlags (or to
   force some flags). For example setting AMTK_FACTORY_IGNORE_ACCELS_FOR_APP for
