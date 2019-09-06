@@ -356,7 +356,11 @@ amtk_utils_bind_g_action_to_gtk_action (GActionMap     *g_action_map,
 
 out:
 	g_free (g_action_name);
-	g_clear_pointer (&target_value, (GDestroyNotify)g_variant_unref);
+
+	if (target_value != NULL)
+	{
+		g_variant_unref (target_value);
+	}
 }
 
 /**
