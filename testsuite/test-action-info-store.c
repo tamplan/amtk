@@ -46,16 +46,16 @@ test_add_entries (void)
 					    NULL);
 
 	info1 = amtk_action_info_store_lookup (store, "win.open");
-	g_assert (info1 != NULL);
+	g_assert_true (info1 != NULL);
 	g_assert_cmpstr (amtk_action_info_get_icon_name (info1), ==, "document-open");
-	g_assert (amtk_action_info_get_tooltip (info1) == NULL);
+	g_assert_true (amtk_action_info_get_tooltip (info1) == NULL);
 
 	central_store = amtk_action_info_central_store_get_singleton ();
 	info2 = amtk_action_info_central_store_lookup (central_store, "win.open");
-	g_assert (info1 == info2);
+	g_assert_true (info1 == info2);
 
 	info1 = amtk_action_info_store_lookup (store, "plouf");
-	g_assert (info1 == NULL);
+	g_assert_true (info1 == NULL);
 
 	g_object_unref (store);
 }
