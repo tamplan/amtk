@@ -37,7 +37,7 @@ gchar *		_amtk_utils_replace_home_dir_with_tilde		(const gchar *filename);
 
 gchar *		amtk_utils_remove_mnemonic			(const gchar *str);
 
-/* GTK+ utilities */
+/* GTK utilities */
 
 gchar *		amtk_utils_recent_chooser_menu_get_item_uri	(GtkRecentChooserMenu *menu,
 								 GtkMenuItem          *item);

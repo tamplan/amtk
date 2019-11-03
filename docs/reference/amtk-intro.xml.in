@@ -15,7 +15,7 @@
 <refnamediv>
   <refname>Amtk Introduction</refname>
   <refpurpose>
-    Introduction to the Actions, Menus and Toolbars Kit for GTK+ applications.
+    Introduction to the Actions, Menus and Toolbars Kit for GTK applications.
   </refpurpose>
 </refnamediv>
 
@@ -24,7 +24,7 @@
   initially created as a basic <link linkend="GtkUIManager">GtkUIManager</link>
   replacement based on <link linkend="GAction">GAction</link>.
   <link linkend="GtkUIManager">GtkUIManager</link> has been deprecated in
-  GTK+&nbsp;3 (and removed in GTK+&nbsp;4), without a good replacement for
+  GTK&nbsp;3 (and removed in GTK&nbsp;4), without a good replacement for
   applications that want to keep a traditional UI (with a
   <link linkend="GtkMenuBar">GtkMenuBar</link>, a
   <link linkend="GtkToolbar">GtkToolbar</link> and a
@@ -94,7 +94,7 @@
     <listitem>
       <para>
         Something that is not possible to do with the support of
-        <link linkend="GMenu">GMenu</link> in GTK+, that Amtk solves when using
+        <link linkend="GMenu">GMenu</link> in GTK, that Amtk solves when using
         <link linkend="GtkMenuItem">GtkMenuItem</link>'s: when a
         <link linkend="GtkMenuItem">GtkMenuItem</link> is selected (e.g. when
         the mouse hovers it), showing a longer description in the
@@ -147,9 +147,9 @@
 </refsect1>
 
 <refsect1>
-  <title>GTK+ dependency</title>
+  <title>GTK dependency</title>
   <para>
-    Amtk&nbsp;@AMTK_API_VERSION@ depends on GTK+&nbsp;3.
+    Amtk&nbsp;@AMTK_API_VERSION@ depends on GTK&nbsp;3.
   </para>
 </refsect1>
 

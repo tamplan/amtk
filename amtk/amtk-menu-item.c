@@ -88,7 +88,7 @@ amtk_menu_item_set_long_description (GtkMenuItem *menu_item,
  * Since: 2.0
  */
 /* Based on gtk_model_menu_item_set_icon() from gtkmodelmenuitem.c (private
- * GTK+ class).
+ * GTK class).
  * Copyright 2011, 2013 Canonical Limited
  */
 void
